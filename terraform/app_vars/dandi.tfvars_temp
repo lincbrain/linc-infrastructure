@@ -1,0 +1,79 @@
+######################################################################################################################
+# variables_api.tf file
+######################################################################################################################
+
+# API General
+module_source     = "girder/girder4/heroku"
+module_version    = "0.13.0"
+
+# Heroku Configuration
+heroku_team_name        = "dandi"
+heroku_web_dyno_size    = "standard-2x"
+heroku_worker_dyno_size = "standard-2x"
+heroku_postgresql_plan  = "standard-0"
+heroku_cloudamqp_plan   = "squirrel-1"
+heroku_papertrail_plan  = "liatorp"
+
+# Resource Scaling
+heroku_web_dyno_quantity    = 1
+heroku_worker_dyno_quantity = 1
+
+# Application Configuration
+django_default_from_email          = "admin@api.dandiarchive.org"
+django_cors_origin_whitelist       = ["https://dandiarchive.org"]
+django_cors_origin_regex_whitelist = ["^https:\\/\\/[0-9a-z\\-]+--gui-dandiarchive-org\\.netlify\\.app$"]
+
+# Sentry Configuration
+django_sentry_dsn         = "https://4bd48b5174ea4b42a130e63ebe3d60d2@o308436.ingest.sentry.io/5266078"
+django_sentry_environment = "production"
+
+# Worker Configuration
+checksum_worker_size = "standard-2x"
+checksum_worker_quantity = 1
+analytics_worker_size = "standard-1x"
+analytics_worker_quantity = 1
+
+# DOIs and API Configuration
+doi_api_password    = "your_password_here" # Sensitive data should be stored securely
+doi_api_user        = "dartlib.dandi"
+doi_api_url         = "https://api.datacite.org/dois"
+doi_prefix          = "10.48324"
+doi_publish         = "true"
+
+# URLs
+web_app_url       = "https://dandiarchive.org"
+api_url           = "https://api.dandiarchive.org"
+jupyterhub_url    = "https://hub.dandiarchive.org/"
+
+# Additional Django Vars
+additional_django_vars = {
+  DJANGO_CONFIGURATION                         = "HerokuProductionConfiguration"
+  DJANGO_DANDI_DANDISETS_BUCKET_NAME           = "" # You must provide actual bucket names
+  DJANGO_DANDI_DANDISETS_EMBARGO_BUCKET_NAME   = ""
+  DJANGO_DANDI_DANDISETS_LOG_BUCKET_NAME       = ""
+  DJANGO_DANDI_DANDISETS_EMBARGO_LOG_BUCKET_NAME = ""
+  DJANGO_CELERY_WORKER_CONCURRENCY             = "4"
+}
+
+######################################################################################################################
+# variables_domain.tf file
+######################################################################################################################
+
+zone_name = "dandiarchive.org"
+
+acm_record_name = "_cbe41dfe1888c2bb5c157cacc35e1722"
+acm_record_value = "_46df7ee9a9c17698aedbb737f220c63a.mzlfeqexyx.acm-validations.aws"
+
+gui_record_value = "75.2.60.5"
+
+gui_staging_record_name = "gui-staging"
+gui_staging_record_value = "gui-staging-dandiarchive-org.netlify.com"
+
+www_record_value = "dandi.github.io"
+
+email_mx_records = [
+  "10 mx1.improvmx.com.",
+  "20 mx2.improvmx.com.",
+]
+
+email_spf_record = "v=spf1 include:spf.improvmx.com ~all"
