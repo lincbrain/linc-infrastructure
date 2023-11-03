@@ -9,12 +9,14 @@ variable "bucket_name" {
   description = "The name of the bucket."
 }
 
+# TODO: Ask Kitware
 # TODO: remove after migration
 variable "allow_heroku_put_object" {
   type    = bool
   default = false
 }
 
+# TODO: Ask Kitware
 # TODO: refactor after migration
 variable "allow_cross_account_heroku_put_object" {
   type    = bool
@@ -35,6 +37,7 @@ variable "log_bucket_name" {
   description = "The name of the log bucket."
 }
 
+# TODO: Ask Kitware
 # TODO: this can be inferred from the "versioning" variable once we're ready
 # to deploy this to the production bucket as well.
 variable "trailing_delete" {
